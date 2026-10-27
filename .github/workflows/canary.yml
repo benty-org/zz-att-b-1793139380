@@ -1,0 +1,10 @@
+name: canary
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: no external actions at all
+        run: echo "CANARY-OK"

@@ -1,0 +1,19 @@
+name: att
+on: workflow_dispatch
+permissions:
+  id-token: write
+  attestations: write
+  contents: read
+jobs:
+  mint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: make payload
+        run: |
+          set -x
+          mkdir -p out
+          printf 'bb-team attestation permission-enforcement arm TS=%s\n' "1793139380" > out/payload.bin
+          sha256sum out/payload.bin | tee out/digest.txt
+      - uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: out/payload.bin
